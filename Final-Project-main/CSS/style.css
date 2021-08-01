@@ -1,0 +1,67 @@
+.title{
+    background-color: aqua;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    
+    
+}
+.form{
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.cardone{
+    background-color: rgb(22, 128, 136);
+    color: black;
+    /* margin-right: 1em; */
+    display: grid;
+    /* grid-template-columns: 200px 250px;
+    grid-auto-rows: minmax(150px,auto);
+    grid-gap: 20px; */
+
+    
+}
+.cardA{
+    background-color: rgb(132, 62, 141);
+    color: black;
+    
+}
+
+.cardtwo{
+    background-color:rgba(43, 6, 129, 0.336);
+    color: black;
+    /* margin-right: 1em; */
+
+}
+
+.cardthree{
+    background-color:rgba(47, 73, 218, 0.568) ;
+    color: black;
+    /* margin-right: 1em; */
+
+}
+.cardfour{
+    background-color:rgba(39, 128, 98, 0.192);
+    color: black;
+    /* margin-right: 1em; */
+
+}
+.cardfive{
+    background-color:rgba(16, 163, 90, 0.466);
+    color: black;
+    /* margin-right: 2em; */
+}
+
+
+.flex-container {
+    display: box;
+  }
+  
+  #inputAll {
+
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 200px;
+    }
+    
