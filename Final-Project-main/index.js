@@ -2,44 +2,34 @@
 // const TaskManager = taskManager.TaskManager
 //import TaskManager from './taskManager.js'
 
-const createTaskHTML = (
-  name,
-  detailedDescription,
-  assignedTo,
-  dueDate,
-  status
-) => {
+const createTaskHTML = (name,detailedDescription,assignedTo,dueDate,id) => {
+ 
   const html = `
     <div class="row">  
         <div class="col-lg-6">
             <h4 class="card-title" id ="taskListCard">Task List</h4>
-            <div class="card mb-4" id ="taskListCard"> 
-                <div class="card-body cardone" id "inputAll">
-                    <ul class="list-group  list-group-flush" id "inputAll">
+            <div class="card mb-4" id ="taskListCard" taskid = ${id}> 
+                <div class="card-body cardone">
+                    <ul class="list-group  list-group-flush">
                         <li class="list-group-item cardA">Name: ${name}</li>
                         <li class="list-group-item cardA">Discription:${detailedDescription}</li>
                         <li class="list-group-item cardA">Assigned To: ${assignedTo}</li>
                         <li class="list-group-item cardA">Date: ${dueDate}</li>           
                     </ul>
                     <br>
-                    <div>
-                        <label for="toDo">Choose status:</label>
-                        <select name="status" id="status">
-                        <option value="done">Done</option>
-                        <option value="Inprogress">In Progress</option>
-                        <option value="delete">Delete</option>
-                        </select>
-                    </div>
                 </div>
+            </div>
+            </div>
             
             </div>
-            </div>
-        </div>
-    </div> 
-    `;
-  return html;
+            <button type="button" class="done-button">Success</button>
+        `;
+        return html;
 };
 
+// const taskList=document.getElementById("taskLists")
+
+//***************************************************** */
 class TaskManager {
   constructor() {
     this.tasks = [];
@@ -58,6 +48,17 @@ class TaskManager {
     this.tasks.push(newTask);
     this.currentId++;
   }
+  getTaskById(taskid) {
+    let foundTask;
+    for (let i=0; i<this.tasks.length; i++) {
+    let task = this.tasks[i];
+      if (task.id=== taskid)  {
+        foundTask=task;
+      }
+    }
+    return foundTask;
+    }
+
 
   validFormFieldInput(taskName) {
     console.log("name: " + taskName);
@@ -77,8 +78,9 @@ class TaskManager {
       tasksHtmlList.push(newTaskHTML);
     }
     // console.log(this.tasks);
-    const displayHere = document.getElementById("displayHere");
-    displayHere.innerHTML = tasksHtmlList.join("\n");
+    //To display on the web page
+    const tasksLists = document.getElementById("tasksLists");
+    tasksLists.innerHTML = tasksHtmlList.join("\n");
   }
 }
 
@@ -101,16 +103,16 @@ newTaskForm.addEventListener("submit", (event) => {
 
   let msg = [];
   if (taskName === "" || taskName == null) {
-    msg.push("Task name is Required");
+    msg.push("Task name is required");
   }
   if (detailedDescription === "" || detailedDescription == null) {
-    msg.push("DetailedDescription is Required");
+    msg.push("Detailed description is required");
   }
   if (taskAssignedTo === "" || taskAssignedTo == null) {
-    msg.push("TaskAssignedTo is Required");
+    msg.push("Task assigned to is required field");
   }
   if (taskDueDate === "" || taskDueDate == String) {
-    msg.push("Wrong Input");
+    msg.push("Due date is required");
   }
   if (msg.length > 0) {
     errorMessage.innerText = msg.join(" ,");
@@ -122,19 +124,33 @@ newTaskForm.addEventListener("submit", (event) => {
     document.getElementById("newTaskForm").reset();
     errorMessage.innerText = "";
   }
+
+ 
 });
 
-// //edit form
 
-// function editForm(index) {
-//     var formhtml = document.getElementById('user');
-//     userhtml.innerHTML = '';
-//     for(var i=o i <URLSearchParams.length,i++){
-//         if(i ==index){
-//             userhtml.innerHTML += `div class = "red">
-//             NAME: <input id="inputName" required type = 'text' placeholder = "${users[i].name}"> <br></br>`
-//         } else {
-//             userhtml.innerHTML += `div class = "black" <p> NAME: ${users[i].name} `
-//         }
-//     }
-// }
+// Select the Tasks List
+const taskList = document.querySelector('#tasksLists');
+
+// Add an 'onclick' event listener to the Tasks List
+taskList.addEventListener('click', (event) => {
+    // Check if a "Mark As Done" button was clicked
+    if (event.target.classList.contains('done-button')) {
+        // Get the parent Task
+        const parentTask = event.target.parentElement.parentElement;
+
+        // Get the taskId of the parent Task.
+        const taskId = Number(parentTask.dataset.taskid);
+
+        // Get the task from the TaskManager using the taskId
+        const task = tm.getTaskById(taskid);
+
+        // Update the task status to 'DONE'
+        task.status = 'DONE';
+
+        // Render the tasks
+        tm.render();
+    }
+});
+
+
